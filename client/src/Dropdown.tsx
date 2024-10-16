@@ -62,8 +62,8 @@ const Dropdown: React.FC<DropdownProps> = ({ pickCard }) => {
             }}
             onClick={(e) => {setOpen(!isOpen); e.stopPropagation();}}
             />
-            {isOpen && (
-                <div className='max-h-24 overflow-y-scroll flex flex-col text-left'>
+            {isOpen ? (
+                <div className='max-h-96 overflow-y-scroll flex flex-col text-left'>
                     {
                         HSCards.filter((card) => card.name.toLowerCase().includes(search.toLowerCase()))
                         .map((card) => (
@@ -71,15 +71,17 @@ const Dropdown: React.FC<DropdownProps> = ({ pickCard }) => {
                                 key={card.id}
                                 type="button"
                                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                                    setSearch(card.name);
                                     pickCard(card); 
+                                    setInputField("");
+                                    setSearch("");
                                     setOpen(false); 
                                     e.stopPropagation(); 
                                 }}
                                 onKeyDown={(e) => {
                                     if (e.key === 'Enter' || e.key === ' ') {
-                                        setSearch(card.name);
                                         pickCard(card);
+                                        setInputField("");
+                                        setSearch("");
                                         setOpen(false);
                                     }
                                 }}
@@ -89,7 +91,7 @@ const Dropdown: React.FC<DropdownProps> = ({ pickCard }) => {
                         ))
                     }
                 </div>
-            )}
+            ) : <div /> }
         </div>
     )
 }

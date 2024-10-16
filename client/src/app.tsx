@@ -25,17 +25,13 @@ function rarityIdToRarity(rarityId: number) {
 const App = () => {
 
     const [guesses, setGuesses] = useState<Card[]>([]);
+    const [randomCard, setRandomCard] = useState<Card>(HSCards[Math.floor(Math.random() * HSCards.length)]);
+    console.log("random card", randomCard);
 
-    const randomCard = HSCards[Math.floor(Math.random() * HSCards.length)];
-    console.log(randomCard);
-
-    function pickCard(card) {
-        // if (guesses.length < 5) {
-            setGuesses([...guesses, card]);
-
-        // }
-        console.log(card);
-        console.log(guesses);
+    function pickCard(card: Card) {
+        console.log("picked", card);
+        setGuesses([...guesses, card]);
+        console.log("current guesses", guesses);
     }
 
     return (
@@ -67,9 +63,8 @@ const App = () => {
                                     <div className="bg-red-100">↑</div> :
                                 guess.manaCost < randomCard.manaCost ?
                                     <div className="bg-red-100">↓</div> :
-                                    <></>
+                                    <div />
                             }
-                            {/* <div>{guess.manaCost}</div> */}
                             {
                                 guess.attack === randomCard.attack ?
                                     <div className="bg-green-100">{guess.attack == null ? "N/A" : guess.attack}</div> :
@@ -77,9 +72,8 @@ const App = () => {
                                     <div className="bg-red-100">↑</div> :
                                 (guess.attack || 0) < (randomCard.attack || 0) ?
                                     <div className="bg-red-100">↓</div> :
-                                    <></>
+                                    <div />
                             }
-                            {/* <div>{guess.attack == null ? "N/A" : guess.attack}</div> */}
                             {
                                 guess.health === randomCard.health ?
                                     <div className="bg-green-100">{guess.health == null ? "N/A" : guess.health}</div> :
@@ -87,15 +81,13 @@ const App = () => {
                                     <div className="bg-red-100">↑</div> :
                                 (guess.health || 0) < (randomCard.health || 0) ?
                                     <div className="bg-red-100">↓</div> :
-                                    <></>
+                                    <div />
                             }
-                            {/* <div>{guess.health == null ? "N/A" : guess.health}</div> */}
                             {
                                 guess.cardSetId === randomCard.cardSetId ?
                                     <div className="bg-green-100">{guess.cardSetId}</div> :
                                     <div className="bg-red-100">X</div>
                             }
-                            {/* <div>{guess.cardSetId}</div> */}
                             {
                                 guess.rarityId === randomCard.rarityId ?
                                     <div className="bg-green-100">{rarityIdToRarity(guess.rarityId)}</div> :
@@ -103,9 +95,8 @@ const App = () => {
                                     <div className="bg-red-100">↑</div> :
                                 (guess.rarityId || 0) < (randomCard.rarityId || 0) ?
                                     <div className="bg-red-100">↓</div> :
-                                    <></>
+                                    <div />
                             }
-                            {/* <div>{guess.rarityId == null ? "N/A" : guess.rarityId}</div> */}
                         </div>
                     ))
                 }
