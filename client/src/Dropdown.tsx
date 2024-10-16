@@ -29,38 +29,38 @@ type Card = {
 };
 
 type DropdownProps = {
-    selection: string;
-    setSelection: (selection: Card) => void;
+    pickCard: (selection: Card) => void;
 };
 
-const Dropdown: React.FC<DropdownProps> = ({ selection, setSelection }) => {
+const Dropdown: React.FC<DropdownProps> = ({ pickCard }) => {
     const [search, setSearch] = useState("");
+    const [inputField, setInputField] = useState("");
     const [isOpen, setOpen] = useState(false);
     
-    const searchVal = () => {
-        if (selection) return selection;
-        return search;
-    }
-
     useEffect(() => {
         function toggleOpen() {
-            setOpen(!isOpen);
+            setOpen(false);
         }
         document.addEventListener("click", toggleOpen);
         return () => document.removeEventListener("click", toggleOpen);
-    }, [isOpen]);
+    }, []);
+
+    // debounce search
+    useEffect(() => {
+        const timeout = setTimeout(() => setSearch(inputField), 400);
+        return () => clearTimeout(timeout);
+    }, [inputField]);
 
     return (
-        <div>
+        <div className="self-center">
             <input 
             type="text" 
-            value={searchVal()} 
+            value={inputField} 
             placeholder="Search for a card..."
             onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
-                setSearch(e.target.value);
+                setInputField(e.target.value);
             }}
-            onClick={() => setOpen(!isOpen)}
-            onFocus={() => setOpen(true)}
+            onClick={(e) => {setOpen(!isOpen); e.stopPropagation();}}
             />
             {isOpen && (
                 <div className='max-h-24 overflow-y-scroll flex flex-col text-left'>
@@ -70,10 +70,16 @@ const Dropdown: React.FC<DropdownProps> = ({ selection, setSelection }) => {
                             <button 
                                 key={card.id}
                                 type="button"
-                                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {setSelection(card); setOpen(false); e.stopPropagation(); }}
+                                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                                    setSearch(card.name);
+                                    pickCard(card); 
+                                    setOpen(false); 
+                                    e.stopPropagation(); 
+                                }}
                                 onKeyDown={(e) => {
                                     if (e.key === 'Enter' || e.key === ' ') {
-                                        setSelection(card);
+                                        setSearch(card.name);
+                                        pickCard(card);
                                         setOpen(false);
                                     }
                                 }}
