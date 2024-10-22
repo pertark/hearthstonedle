@@ -1,7 +1,8 @@
 // biome-ignore lint/style/useImportType: needed
 import * as React from 'react'
-import HSCards from '../../cards.json'
-import { useEffect, useState } from 'react'
+import HSCards from '../standard_cards.json'
+import { Suspense, useEffect, useState, useTransition } from 'react'
+import CardHover from './CardHover';
 
 type Card = {
     id: number;
@@ -35,14 +36,16 @@ type DropdownProps = {
 const Dropdown: React.FC<DropdownProps> = ({ pickCard }) => {
     const [search, setSearch] = useState("");
     const [inputField, setInputField] = useState("");
-    const [isOpen, setOpen] = useState(false);
+    const [isOpen, setOpen] = useState(0);
+    // const [isOptionsOpen, setOptionsOpen] = useState(false);
+    const [isPending, setTransition] = useTransition();
     
     useEffect(() => {
-        function toggleOpen() {
-            setOpen(false);
+        function closeMenu() {
+            setOpen(0);
         }
-        document.addEventListener("click", toggleOpen);
-        return () => document.removeEventListener("click", toggleOpen);
+        document.addEventListener("click", closeMenu);
+        return () => document.removeEventListener("click", closeMenu);
     }, []);
 
     // debounce search
@@ -51,22 +54,43 @@ const Dropdown: React.FC<DropdownProps> = ({ pickCard }) => {
         return () => clearTimeout(timeout);
     }, [inputField]);
 
+    function closeMenu() {
+        setOpen(0);
+        // setOptionsOpen(false);
+    }
+
+    function openMenu() {
+        setOpen(1);
+        setTransition(() => {
+            setOpen(2);
+        });
+    }
+
+    function toggleOpen() {
+        if (isOpen) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+    }
+
     return (
-        <div className="self-center">
+        <div className="flex justify-center items-center flex-col gap-4">
             <input 
             type="text" 
+            className='max-w-md'
             value={inputField} 
             placeholder="Search for a card..."
             onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
                 setInputField(e.target.value);
             }}
-            onClick={(e) => {setOpen(!isOpen); e.stopPropagation();}}
+            onClick={(e) => {e.stopPropagation();}}
             />
-            {isOpen ? (
-                <div className='max-h-96 overflow-y-scroll flex flex-col text-left'>
+            {search.length > 0 ? (
+                <div className='max-h-96 overflow-y-scroll flex flex-col text-left min-w-72'>
                     {
-                        HSCards.filter((card) => card.name.toLowerCase().includes(search.toLowerCase()))
-                        .map((card) => (
+                        HSCards.filter((card: Card) => card.name.toLowerCase().includes(search.toLowerCase()))
+                        .map((card: Card) => (
                             <button 
                                 key={card.id}
                                 type="button"
@@ -74,7 +98,7 @@ const Dropdown: React.FC<DropdownProps> = ({ pickCard }) => {
                                     pickCard(card); 
                                     setInputField("");
                                     setSearch("");
-                                    setOpen(false); 
+                                    closeMenu();
                                     e.stopPropagation(); 
                                 }}
                                 onKeyDown={(e) => {
@@ -82,11 +106,11 @@ const Dropdown: React.FC<DropdownProps> = ({ pickCard }) => {
                                         pickCard(card);
                                         setInputField("");
                                         setSearch("");
-                                        setOpen(false);
+                                        closeMenu();
                                     }
                                 }}
                             >
-                                {card.name}
+                                <CardHover card={card}>{card.name}</CardHover>
                             </button>
                         ))
                     }
