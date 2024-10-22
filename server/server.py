@@ -2,7 +2,7 @@ import flask
 import json
 import os
 import random
-from apscheduler.scheduler.background import BackgroundScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 
 app = flask.Flask(__name__)
 
@@ -26,12 +26,12 @@ def daily_routine():
     state["previous_cards"].append(todays_card)
     state["iteration"] += 1
 
-@flask.route("/")
+@app.route("/api")
 def get_daily_standard_card():
-    return state["iteration"], state["previous_cards"][-1]
+    return json.dumps((state["iteration"], state["previous_cards"][-1]))
 
 if __name__ == "__main__":
     scheduler = BackgroundScheduler()
     scheduler.add_job(daily_routine, "cron", hour=0, minute=0, second=0)
     scheduler.start()
-    app.run()
+    app.run(port=8080)
