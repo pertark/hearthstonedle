@@ -15,7 +15,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build:esbuild": "node ./esbuild.config.mjs",
+    "build:esbuild": "node ./prod.esbuild.config.mjs",
     "build:tailwind": "npx tailwindcss -i ./src/style.css -o ./dist/styles.css",
     "build": "npm run build:esbuild && npm run build:tailwind",
     "dev:esbuild": "node ./esbuild.config.mjs --watch",

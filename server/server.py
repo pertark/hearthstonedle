@@ -26,7 +26,11 @@ def daily_routine():
     state["previous_cards"].append(todays_card)
     state["iteration"] += 1
 
-@app.route("/api")
+@app.route("/api/")
+def debug():
+    return "hello :)"
+
+@app.route("/api/daily")
 def get_daily_standard_card():
     return json.dumps((state["iteration"], state["previous_cards"][-1]))
 
