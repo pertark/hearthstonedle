@@ -7,7 +7,11 @@ RUN npm install
 COPY client/ .
 RUN npm run build
 
+FROM scratch as dist
+WORKDIR /app
+COPY --from=build /app/index.html .
+COPY --from=build /app/dist dist
+
 FROM nginx:alpine
-# gonna need to remove build artifacts later
-COPY --from=build /app/ /var/www/html
+COPY --from=dist /app /var/www/html
 CMD ["nginx", "-g", "daemon off;"]
