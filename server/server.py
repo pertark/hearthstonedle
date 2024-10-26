@@ -23,6 +23,7 @@ def daily_routine():
     while (todays_card := random.choice(standard_cards)) in state["previous_cards"]:
         pass
 
+    print("Today's card:", todays_card)
     state["previous_cards"].append(todays_card)
     state["iteration"] += 1
 
@@ -34,8 +35,10 @@ def debug():
 def get_daily_standard_card():
     return json.dumps((state["iteration"], state["previous_cards"][-1]))
 
-if __name__ == "__main__":
+with app.app_context():
     scheduler = BackgroundScheduler()
     scheduler.add_job(daily_routine, "cron", hour=0, minute=0, second=0)
     scheduler.start()
+
+if __name__ == "__main__":
     app.run(port=8080)
