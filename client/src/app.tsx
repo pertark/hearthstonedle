@@ -23,7 +23,7 @@ function App() {
             });
     }, [])
     return (
-        <div className="bg-slate-50 w-full flex flex-col h-screen">
+        <div className="w-full flex flex-col h-screen">
             <h1 className="text-2xl bold text-center m-4">Hearthstonedle{ !!iteration && ` #${iteration}`}</h1>
             {/* TODO: help/how to play */}
             {
