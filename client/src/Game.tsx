@@ -29,7 +29,7 @@ const Game = ({ iteration, targetCard }) => {
         }
 
         function onShareClick(e) {
-            navigator.clipboard.writeText(`Hearthstonedle #${iteration}\n${share}\nhttps://hsdle.com`);
+            navigator.clipboard.writeText(`Hearthstonedle #${iteration}\n${share}https://hsdle.com`);
             e.target.innerText = "Copied!";
             setTimeout(() => {e.target.innerText = "Share"}, 1000);
         }
