@@ -1,4 +1,5 @@
 import json
+from collections import defaultdict
 
 with open("cards.json", encoding="utf-8") as f:
     cards = json.load(f)
@@ -61,6 +62,17 @@ standard_sets = [
 
 standard_cards = [card for card in cards if card["cardSetId"] in standard_sets]
 print("No. standard cards:", len(standard_cards))
+
+# find cards in multiple sets
+card_expacs = defaultdict(set)
+for card in standard_cards:
+    card_expacs[card["name"]].add(card["cardSetId"])
+
+duplicates = {name: list(sets) for name, sets in card_expacs.items() if len(sets) > 1}
+print("Number of duplicates:", len(duplicates))
+
+# filter out all core set duplicates
+standard_cards = list(filter(lambda card: card["name"] in duplicates and card["cardSetId"] == 1637, standard_cards))
 
 with open("standard_cards.json", "w", encoding="utf-8") as f:
     json.dump(standard_cards, f)
