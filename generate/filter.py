@@ -72,7 +72,7 @@ duplicates = {name: list(sets) for name, sets in card_expacs.items() if len(sets
 print("Number of duplicates:", len(duplicates))
 
 # filter out all core set duplicates
-standard_cards = list(filter(lambda card: card["name"] in duplicates and card["cardSetId"] == 1637, standard_cards))
+standard_cards = list(filter(lambda card: not (card["name"] in duplicates and card["cardSetId"]) == 1637, standard_cards))
 
 with open("standard_cards.json", "w", encoding="utf-8") as f:
     json.dump(standard_cards, f)
