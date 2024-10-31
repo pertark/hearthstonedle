@@ -3,15 +3,18 @@ import ReactDOM from 'react-dom/client';
 import Game from './Game';
 import { useEffect, useState } from 'react'
 
-// dev
-// const api = "http://localhost:8080/api";
-// prod
 const api = "/api"
 
 function App() {
     const [iteration, setIteration] = useState(0);
     const [targetCard, setTargetCard] = useState(null);
     useEffect(() => {
+        // dev
+        // import('../standard_cards.json').then((HSCards) => HSCards[Math.floor(Math.random() * HSCards.length)]).then((card) => {
+        //     console.log(card);
+        //     setTargetCard(card);
+        //     setIteration(1);
+        // }); return;
         fetch(`${api}/daily`)
             .then((res) => res.json())
             .then((data) => {
@@ -25,7 +28,7 @@ function App() {
             {/* TODO: help/how to play */}
             {
                 targetCard ?
-                    <Game targetCard={targetCard} /> :
+                    <Game iteration={iteration} targetCard={targetCard} /> :
                     <div className="text-center">Loading...</div>
             }
         </div>
