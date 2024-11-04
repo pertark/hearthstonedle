@@ -4,13 +4,20 @@
 
 @font-face {
     font-family: 'belwe_bd_btbold';
-    src: url('/public/font/belwe-webfont.woff2') format('woff2'),
-         url('/public/font/belwe-webfont.woff') format('woff');
+    src: url('/public/font/belwe_bold.woff2') format('woff2'),
+         url('/public/font/belwe_bold.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 
+.bold {
+    color: rgb(97, 67, 38);
+}
+
 body {
-    font-family: 'belwe_bd_btbold';
+    font-family: 'belwe_bd_btbold', sans-serif;
+    font-weight: 700;
+    color: rgb(123, 93, 64);
+    /* font-size: 14px; */
     background-image: url("https://d39zum0jwvcigt.cloudfront.net/images/ui/parchment-f5126a8249a32eb235b139078b4cc13b5fb9d2c29b0e825569312681123d721a1f2e1addb4bad78f979933e561361e2ee2c5f5881ab4fef5385c66c6276c3b44.jpg");
 }

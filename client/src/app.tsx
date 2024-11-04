@@ -24,8 +24,8 @@ function App() {
     }, [])
     return (
         <div className="w-full flex flex-col h-screen">
-            <h1 className="text-2xl bold text-center m-4">Hearthstonedle{ !!iteration && ` #${iteration}`}</h1>
-            {/* TODO: help/how to play */}
+            <h1 className="text-2xl text-center mt-4 bold">Hearthstonedle{ !!iteration && ` #${iteration}`}</h1>
+            <p className="mb-4 text-center">Sets currently in: TITANS, Festival of Legends, March of the Lich King, Murder at Castle Nathria, Voyage to the Sunken City, Core, Path of Arthas</p>
             {
                 targetCard ?
                     <Game iteration={iteration} targetCard={targetCard} /> :

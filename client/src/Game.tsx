@@ -31,7 +31,7 @@ const Game = ({ iteration, targetCard }) => {
         function onShareClick(e) {
             navigator.clipboard.writeText(`Hearthstonedle #${iteration}\n${share}https://hsdle.com`);
             e.target.innerText = "Copied!";
-            setTimeout(() => {e.target.innerText = "Share"}, 1000);
+            setTimeout(() => {e.target.innerText = "Share"}, 3000);
         }
         return (
             <div className="text-center px-4 whitespace-pre-line mb-4">
@@ -54,7 +54,7 @@ const Game = ({ iteration, targetCard }) => {
             }
             <table>
                 <tr
-                    className="text-center border-b-2 border-black mt-4 "
+                    className="text-center border-b-2 border-black mt-4 bold"
                 >
                     <th className="px-2">Card Name</th>
                     <th className="px-2">Class</th>
@@ -70,56 +70,56 @@ const Game = ({ iteration, targetCard }) => {
                             className="border-t border-black text-center [&>*]:px-2"
                             key={guess.id}
                         >
-                            <td>
+                            <td className='bold'>
                                 <CardHover card={guess}>
                                     {guess.name}
                                 </CardHover>
                             </td>
                             {
                                 guess.classId === targetCard.classId ?
-                                    <td className="bg-green-100">{classIdToClass(guess.classId)}</td> :
-                                    <td className="bg-red-100">{classIdToClass(guess.classId)}</td>
+                                    <td className="bg-green-300">{classIdToClass(guess.classId)}</td> :
+                                    <td className="bg-red-300">{classIdToClass(guess.classId)}</td>
                             }
                             {
                                 guess.manaCost === targetCard.manaCost ?
-                                    <td className="bg-green-100">{guess.manaCost}</td> :
+                                    <td className="bg-green-300">{guess.manaCost}</td> :
                                 guess.manaCost < targetCard.manaCost ?
-                                    <td className="bg-red-100">{guess.manaCost}{targetCard.manaCost == null ? " X" : " ↑"}</td> :
+                                    <td className="bg-red-300">{guess.manaCost}{targetCard.manaCost == null ? " X" : " ↑"}</td> :
                                 guess.manaCost > targetCard.manaCost ?
-                                    <td className="bg-red-100">{guess.manaCost}{" ↓"}</td> :
-                                    <td className="bg-red-100">{guess.manaCost}{" X"}</td>
+                                    <td className="bg-red-300">{guess.manaCost}{" ↓"}</td> :
+                                    <td className="bg-red-300">{guess.manaCost}{" X"}</td>
                             }
                             {
                                 guess.attack === targetCard.attack ?
-                                    <td className="bg-green-100">{guess.attack == null ? "N/A" : guess.attack}</td> :
+                                    <td className="bg-green-300">{guess.attack == null ? "N/A" : guess.attack}</td> :
                                 (guess.attack || 0) < (targetCard.attack || 0) ?
-                                    <td className="bg-red-100">{guess.attack == null ? "N/A" : guess.attack}{targetCard.attack == null ? " X" : " ↑"}</td> :
+                                    <td className="bg-red-300">{guess.attack == null ? "N/A" : guess.attack}{targetCard.attack == null ? " X" : " ↑"}</td> :
                                 (guess.attack || 0) > (targetCard.attack || 0) ?
-                                    <td className="bg-red-100">{guess.attack == null ? "N/A" : guess.attack}{" ↓"}</td> :
-                                    <td className="bg-red-100">{guess.attack == null ? "N/A" : guess.attack}{" X"}</td>
+                                    <td className="bg-red-300">{guess.attack == null ? "N/A" : guess.attack}{" ↓"}</td> :
+                                    <td className="bg-red-300">{guess.attack == null ? "N/A" : guess.attack}{" X"}</td>
                             }
                             {
                                 guess.health === targetCard.health ?
-                                    <td className="bg-green-100">{guess.health == null ? "N/A" : guess.health}</td> :
+                                    <td className="bg-green-300">{guess.health == null ? "N/A" : guess.health}</td> :
                                 (guess.health || 0) < (targetCard.health || 0) ?
-                                    <td className="bg-red-100">{guess.health == null ? "N/A" : guess.health}{targetCard.health == null ? " X" : " ↑"}</td> :
+                                    <td className="bg-red-300">{guess.health == null ? "N/A" : guess.health}{targetCard.health == null ? " X" : " ↑"}</td> :
                                 (guess.health || 0) > (targetCard.health || 0) ?
-                                    <td className="bg-red-100">{guess.health == null ? "N/A" : guess.health}{" ↓"}</td> :
-                                    <td className="bg-red-100">{guess.health == null ? "N/A" : guess.health}{" X"}</td>
+                                    <td className="bg-red-300">{guess.health == null ? "N/A" : guess.health}{" ↓"}</td> :
+                                    <td className="bg-red-300">{guess.health == null ? "N/A" : guess.health}{" X"}</td>
                             }
                             {
                                 guess.cardSetId === targetCard.cardSetId ?
-                                    <td className="bg-green-100">{cardSetIdToExpansion(guess.cardSetId)}</td> :
-                                    <td className="bg-red-100">{cardSetIdToExpansion(guess.cardSetId)}</td>
+                                    <td className="bg-green-300">{cardSetIdToExpansion(guess.cardSetId)}</td> :
+                                    <td className="bg-red-300">{cardSetIdToExpansion(guess.cardSetId)}</td>
                             }
                             {
                                 guess.rarityId === targetCard.rarityId ?
-                                    <td className="bg-green-100">{rarityIdToRarity(guess.rarityId)}</td> :
+                                    <td className="bg-green-300">{rarityIdToRarity(guess.rarityId)}</td> :
                                 rarityIdToRarityOrdering(guess.rarityId || 0) < rarityIdToRarityOrdering(targetCard.rarityId || 0) ?
-                                    <td className="bg-red-100">{rarityIdToRarity(guess.rarityId)}{" ↑"}</td> :
+                                    <td className="bg-red-300">{rarityIdToRarity(guess.rarityId)}{" ↑"}</td> :
                                 rarityIdToRarityOrdering(guess.rarityId || 0) > rarityIdToRarityOrdering(targetCard.rarityId || 0) ?
-                                    <td className="bg-red-100">{rarityIdToRarity(guess.rarityId)}{" ↓"}</td> :
-                                    <td className="bg-red-100">{rarityIdToRarity(guess.rarityId)}{" X"}</td>
+                                    <td className="bg-red-300">{rarityIdToRarity(guess.rarityId)}{" ↓"}</td> :
+                                    <td className="bg-red-300">{rarityIdToRarity(guess.rarityId)}{" X"}</td>
                             }
                         </tr>
                     ))

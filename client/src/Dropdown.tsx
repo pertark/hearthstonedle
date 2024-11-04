@@ -78,7 +78,7 @@ const Dropdown: React.FC<DropdownProps> = ({ pickCard }) => {
         <div className="flex justify-center items-center flex-col gap-4">
             <input 
             type="text" 
-            className='max-w-md'
+            className='max-w-md bold'
             value={inputField} 
             placeholder="Search for a card..."
             onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
